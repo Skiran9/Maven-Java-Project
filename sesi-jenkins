@@ -1,0 +1,58 @@
+def maven3
+pipeline {
+    tools {
+  maven "maven3"
+}
+    agent {
+  label 'buildserver'
+}
+
+    stages {
+        stage('pull src code') {
+            steps {
+                git credentialsId: 'github_credentials', url: 'https://github.com/Skiran9/Maven-Java-Project.git'
+                }
+        }
+        stage('compile src code') {
+            steps {
+                 sh 'mvn clean compile'
+               
+            }
+        }
+        stage('predeployment testing') {
+            steps {
+                 sh 'mvn clean test'
+            }
+            post {
+                success{
+                 junit 'target/surefire-reports/*.xml'   
+                }
+            }
+        }
+        stage('packaging') {
+            steps {
+                 sh 'mvn clean package'
+            }
+            post {
+                success{
+                 archiveArtifacts artifacts: '**/*.war', followSymlinks: false   
+                }
+            }
+        }
+        stage('deploying to tomcat') {
+            steps {
+                 sh 'mvn clean package'
+            }
+            post {
+                success{
+                 deploy adapters: [tomcat9(credentialsId: 'tomcat_credentials', path: '', url: 'http://ec2-35-175-178-139.compute-1.amazonaws.com:8080/')], contextPath: 'sample', onFailure: false, war: 'target/*.war'   
+                }
+            }
+        }
+        stage('Integration testing') {
+            steps {
+                 sh 'mvn clean verify'
+            }
+        }
+    }
+}
