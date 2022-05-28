@@ -1,14 +1,14 @@
 def ansible = [:]
          ansible.name = 'ansible'
-         ansible.host = '172.31.30.154'
+         ansible.host = '172.31.23.177'
          ansible.user = 'centos'
-         ansible.password = 'Rnstech@123'
+         ansible.password = 'centos'
          ansible.allowAnyHosts = true
 def kops = [:]
          kops.name = 'kops'
-         kops.host = '172.31.34.51'
+         kops.host = '172.31.82.158'
          kops.user = 'centos'
-         kops.password = 'Rnstech@123'
+         kops.password = 'centos'
          kops.allowAnyHosts = true
 pipeline {
     agent { label 'buildserver'}
