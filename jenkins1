@@ -10,12 +10,6 @@ def kops = [:]
          kops.user = 'centos'
          kops.password = 'centos'
          kops.allowAnyHosts = true
-def buildserver = [:]
-         buildserver.name = 'buildserver'
-         buildserver.host = '172.31.21.72'
-         buildserver.user = 'centos'
-         buildserver.password = 'centos'
-         buildserver.allowAnyHosts = true
 pipeline {
     agent { label 'buildserver'}
 
