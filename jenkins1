@@ -23,7 +23,7 @@ pipeline {
             steps {
                 // Get some code from a GitHub repository
                // git credentialsId: 'github-server-credentials', url: 'https://github.com/venkat09docs/Maven-Java-Project.git'
-		git branch: '*/master', credentialsId: 'github_credentials', url: 'https://github.com/Skiran9/Maven-Java-Project.git'
+		git credentialsId: 'github_credentials', url: 'https://github.com/Skiran9/Maven-Java-Project.git'
 		stash 'Source'
             }
             
